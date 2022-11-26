@@ -64,7 +64,7 @@ class _SignInState extends State<SignIn> {
                       SizedBox(
                         width: size.width,
                         child: Lottie.asset(
-                            'assets/animations/famer-animi.json',
+                            'assets/animations/signin-vegi.json',
                             height: size.height * 0.3),
                       ),
                     ],
@@ -128,7 +128,7 @@ class _SignInState extends State<SignIn> {
                                             bottom: BorderSide(
                                                 color: Colors.grey.shade200))),
                                     child: TextFormField(
-                                      obscureText: true,
+                                      obscureText: isHidepassword,
                                       controller: _pwcon,
                                       onChanged: (value) {
                                         _passWord = value;

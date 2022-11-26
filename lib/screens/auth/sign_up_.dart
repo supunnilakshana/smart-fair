@@ -242,6 +242,7 @@ class _SignUpState extends State<SignUp> {
                                             bottom: BorderSide(
                                                 color: Colors.grey.shade200))),
                                     child: TextFormField(
+                                      obscureText: isHidepassword,
                                       controller: _pwcon,
                                       onChanged: (value) {
                                         _passWord = value;
@@ -249,7 +250,6 @@ class _SignUpState extends State<SignUp> {
                                       validator: (value) {
                                         return Validater.signupPassword(value!);
                                       },
-                                      obscureText: true,
                                       decoration: InputDecoration(
                                           suffixIcon: InkWell(
                                               onTap: _viewPassword,
