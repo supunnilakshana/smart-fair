@@ -27,7 +27,7 @@ final distric = [
 ];
 
 List<String> getcities(String city) {
-  final list = datadis[city]!["Ampara"] as List<String>;
+  final list = datadis[city]!["cities"] as List<String>;
 
   return list;
 }
