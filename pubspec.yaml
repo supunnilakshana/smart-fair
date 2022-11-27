@@ -76,3 +76,4 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/animations/
+    - assets/util/
