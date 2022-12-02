@@ -1,4 +1,7 @@
+String selcity = "Select your a city";
+String seldis = "Select your a district";
 final distric = [
+  seldis,
   "Ampara",
   "Anuradhapura",
   "Badulla",
@@ -35,6 +38,7 @@ List<String> getcities(String city) {
 final datadis = {
   "Ampara": {
     "cities": [
+      selcity,
       "Addalaichenai",
       "Akkaraipattu",
       "Ampara",
@@ -100,6 +104,7 @@ final datadis = {
   },
   "Anuradhapura": {
     "cities": [
+      selcity,
       "Andiyagala",
       "Angamuwa",
       "Anuradhapura",
@@ -233,6 +238,7 @@ final datadis = {
   },
   "Badulla": {
     "cities": [
+      selcity,
       "Akkarasiyaya",
       "Aluketiyawa",
       "Aluttaramma",
@@ -369,6 +375,7 @@ final datadis = {
   },
   "Batticaloa": {
     "cities": [
+      selcity,
       "Ampilanthurai",
       "Araipattai",
       "Ayithiyamalai",
@@ -419,6 +426,7 @@ final datadis = {
   },
   "Colombo": {
     "cities": [
+      selcity,
       "Colombo 01",
       "Colombo 02",
       "Colombo 03",
@@ -503,6 +511,7 @@ final datadis = {
   },
   "Galle": {
     "cities": [
+      selcity,
       "Agaliya",
       "Ahangama",
       "Ahungalla",
@@ -602,6 +611,7 @@ final datadis = {
   },
   "Gampaha": {
     "cities": [
+      selcity,
       "Akaragama",
       "Alawala",
       "Ambagaspitiya",
@@ -731,6 +741,7 @@ final datadis = {
   },
   "Hambantota": {
     "cities": [
+      selcity,
       "Ambalantota",
       "Angunakolapelessa",
       "Bandagiriya Colony",
@@ -799,6 +810,7 @@ final datadis = {
   },
   "Jaffna": {
     "cities": [
+      selcity,
       "Allaipiddi",
       "Allaveddi",
       "Alvai",
@@ -853,6 +865,7 @@ final datadis = {
   },
   "Kalutara": {
     "cities": [
+      selcity,
       "Agalawatta",
       "Alubomulla",
       "Alutgama",
@@ -938,6 +951,7 @@ final datadis = {
   },
   "Kandy": {
     "cities": [
+      selcity,
       "Akurana",
       "Alawatugoda",
       "Aludeniya",
@@ -1107,6 +1121,7 @@ final datadis = {
   },
   "Kegalle": {
     "cities": [
+      selcity,
       "Alawatura",
       "Algama",
       "Alutnuwara",
@@ -1208,10 +1223,11 @@ final datadis = {
     ]
   },
   "Kilinochchi": {
-    "cities": ["Kilinochchi"]
+    "cities": [selcity, "Kilinochchi"]
   },
   "Kurunegala": {
     "cities": [
+      selcity,
       "Alahengama",
       "Alahitiyawa",
       "Alawatuwala",
@@ -1417,6 +1433,7 @@ final datadis = {
   },
   "Mannar": {
     "cities": [
+      selcity,
       "Adampan",
       "Arippu",
       "Athimottai",
@@ -1447,6 +1464,7 @@ final datadis = {
   },
   "Matale": {
     "cities": [
+      selcity,
       "Akuramboda",
       "Alwatta",
       "Ambana",
@@ -1522,6 +1540,7 @@ final datadis = {
   },
   "Matara": {
     "cities": [
+      selcity,
       "Akuressa",
       "Alapaladeniya",
       "Aparekka",
@@ -1603,6 +1622,7 @@ final datadis = {
   },
   "Monaragala": {
     "cities": [
+      selcity,
       "Angunakolawewa",
       "Ayiwela",
       "Badalkumbura",
@@ -1665,6 +1685,7 @@ final datadis = {
   },
   "Mullativu": {
     "cities": [
+      selcity,
       "Mullativu",
       "Alampil",
       "Karuppaddamurippu",
@@ -1686,6 +1707,7 @@ final datadis = {
   },
   "Nuwara Eliya": {
     "cities": [
+      selcity,
       "Agarapathana",
       "Ambagamuwa Udabulathgama",
       "Ambatalawa",
@@ -1760,6 +1782,7 @@ final datadis = {
   },
   "Polonnaruwa": {
     "cities": [
+      selcity,
       "Alutwewa",
       "Aralaganwila",
       "Aselapura",
@@ -1826,6 +1849,7 @@ final datadis = {
   },
   "Puttalam": {
     "cities": [
+      selcity,
       "Adippala",
       "Ambakandawila",
       "Anamaduwa",
@@ -1911,6 +1935,7 @@ final datadis = {
   },
   "Ratnapura": {
     "cities": [
+      selcity,
       "Akarella",
       "Atakalanpanna",
       "Ayagama",
@@ -2033,6 +2058,7 @@ final datadis = {
   },
   "Trincomalee": {
     "cities": [
+      selcity,
       "Agbopura",
       "Buckmigama",
       "Chinabay",
@@ -2076,6 +2102,7 @@ final datadis = {
   },
   "Vavuniya": {
     "cities": [
+      selcity,
       "Vavuniya",
       "Akkarayankulam",
       "Cheddikulam",

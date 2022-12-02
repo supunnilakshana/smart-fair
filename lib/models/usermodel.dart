@@ -4,10 +4,10 @@ class UserModel extends ChangeNotifier {
   String? uid;
   String name;
   String email;
-  String emno;
+  int adno;
   String phone;
-  String role;
-  String area;
+  String district;
+  String city;
   String address;
   String date;
   String imageurl;
@@ -17,9 +17,9 @@ class UserModel extends ChangeNotifier {
     required this.name,
     required this.email,
     required this.phone,
-    required this.role,
-    this.emno = "",
-    this.area = "",
+    required this.district,
+    this.adno = 0,
+    required this.city,
     this.address = "",
     required this.date,
     this.imageurl = "",
@@ -29,10 +29,10 @@ class UserModel extends ChangeNotifier {
       'uid': uid,
       'name': name,
       'email': email,
-      'emno': emno,
+      'adno': adno,
       'phone': phone,
-      'role': role,
-      'area': area,
+      'district': district,
+      'city': city,
       'address': address,
       'date': date,
       'imageurl': imageurl,
@@ -44,10 +44,10 @@ class UserModel extends ChangeNotifier {
       uid: res['uid'],
       name: res['name'],
       email: res['email'],
-      emno: res['emno'] ?? "",
+      adno: res['adno'] ?? "",
       phone: res['phone'] ?? "",
-      role: res['role'],
-      area: res['area'] ?? "",
+      district: res['district'],
+      city: res['city'] ?? "",
       date: res['date'],
       address: res['address'] ?? "",
       imageurl: res['imageurl'] ?? "",
@@ -59,12 +59,33 @@ class UserModel extends ChangeNotifier {
     name = userModel.name;
     email = userModel.email;
     phone = userModel.phone;
-    role = userModel.role;
-    area = userModel.area;
-    emno = userModel.emno;
+    district = userModel.district;
+    city = userModel.city;
+    adno = userModel.adno;
     date = userModel.date;
     address = userModel.address;
     imageurl = userModel.imageurl;
+    snum = userModel.phone;
+    sdis = userModel.district;
+    scity = userModel.city;
+    notifyListeners();
+  }
+
+  String sdis = "";
+  String scity = "";
+  String snum = "";
+  updatescity(String val) {
+    scity = val;
+    notifyListeners();
+  }
+
+  updatesdis(String val) {
+    sdis = val;
+    notifyListeners();
+  }
+
+  updatesphone(String val) {
+    snum = val;
     notifyListeners();
   }
 }

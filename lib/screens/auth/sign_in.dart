@@ -115,7 +115,7 @@ class _SignInState extends State<SignIn> {
                                         return Validater.vaildemail(value!);
                                       },
                                       decoration: const InputDecoration(
-                                          hintText: "Email or Mobile No *",
+                                          hintText: "Email or Mobile No ",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           border: InputBorder.none),
@@ -141,7 +141,7 @@ class _SignInState extends State<SignIn> {
                                               onTap: _viewPassword,
                                               child:
                                                   const Icon(Icons.visibility)),
-                                          hintText: "Password *",
+                                          hintText: "Password ",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           border: InputBorder.none),

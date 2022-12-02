@@ -1,51 +1,40 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:nearvegi/constants/cities.dart';
 import 'package:nearvegi/constants/constraints.dart';
 import 'package:nearvegi/constants/initdata.dart';
+import 'package:nearvegi/models/postmodel.dart';
 import 'package:nearvegi/models/usermodel.dart';
-import 'package:nearvegi/screens/auth/check_signIn.dart';
-
-import 'package:nearvegi/screens/auth/sign_in.dart';
-import 'package:nearvegi/services/auth/signin_mannager.dart';
 import 'package:nearvegi/services/date_time/date.dart';
-import 'package:nearvegi/services/firebase/fb_handeler.dart';
 import 'package:nearvegi/services/upload/file_upload.dart';
-
 import 'package:nearvegi/services/validator/validate_handeler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lottie/lottie.dart';
 
-import '../components/already_have_an_account_acheck.dart';
-import '../components/or_divider.dart';
+import 'package:provider/provider.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class CreatePostScreen extends StatefulWidget {
+  const CreatePostScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<CreatePostScreen> createState() => _CreatePostScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
-  String _email = "";
-  String _passWord = "";
-  String _name = "";
+class _CreatePostScreenState extends State<CreatePostScreen> {
+  String _price = "";
+  String _desc = "";
   String _mobile = "";
-  String _city = "";
+  String _titel = "";
+  String _description = "";
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _uncon = TextEditingController();
-  final TextEditingController _pwcon = TextEditingController();
-  final TextEditingController _namecon = TextEditingController();
+  final TextEditingController _titelcon = TextEditingController();
+  final TextEditingController _pricecon = TextEditingController();
   final TextEditingController _mobilecon = TextEditingController();
-  final TextEditingController _citycon = TextEditingController();
+  final TextEditingController _descriptioncon = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   String dropdowndis = seldis;
   String dropdowncity = selcity;
   late List<String> cities;
@@ -61,6 +50,9 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final usermodel = Provider.of<UserModel>(context);
+    // _mobilecon.text = usermodel.snum;
+
     return Scaffold(
       key: _scaffoldKey,
       body: GestureDetector(
@@ -72,22 +64,26 @@ class _SignUpState extends State<SignUp> {
             decoration: const BoxDecoration(gradient: kGradientGreen),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: size.height * 0.05),
+              children: [
+                SizedBox(height: size.height * 0.02),
+                const BackButton(
+                  color: Colors.white,
+                ),
                 Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 2, bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Sign Up",
-                        style: TextStyle(color: Colors.white, fontSize: 40),
+                        "Create a  advertisment",
+                        style: TextStyle(color: Colors.white, fontSize: 32),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       const Text(
-                        "Hello !! ",
+                        "Sell your goods",
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                       SizedBox(height: size.height * 0.01),
@@ -110,46 +106,33 @@ class _SignUpState extends State<SignUp> {
                         child: Column(
                           children: [
                             const SizedBox(
-                              height: 5,
+                              height: 25,
                             ),
-                            SizedBox(
-                              height: size.width * 0.25,
-                              width: size.height * 0.12,
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                fit: StackFit.expand,
-                                children: [
-                                  isimgload
-                                      ? CircleAvatar(
-                                          radius: size.width * 0.17,
-                                          backgroundImage:
-                                              FileImage(File(_image!.path)),
-                                        )
-                                      : CircleAvatar(
-                                          radius: size.width * 0.17,
-                                          backgroundImage: const AssetImage(
-                                              "assets/icons/farmer.png"),
-                                        ),
-                                  Positioned(
-                                      bottom: 0,
-                                      right: -25,
-                                      child: RawMaterialButton(
-                                        onPressed: () async {
-                                          FocusScope.of(context).unfocus();
-                                          _imgFromGallery();
-                                        },
-                                        elevation: 2.0,
-                                        fillColor: const Color(0xFFF5F6F9),
-                                        padding: const EdgeInsets.all(5.0),
-                                        shape: const CircleBorder(),
-                                        child: const Icon(
-                                          Icons.camera_alt_outlined,
-                                          color: Colors.green,
-                                        ),
-                                      )),
-                                ],
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: size.width * 0.16,
+                                    child: GestureDetector(
+                                      child: Image.asset(
+                                          "assets/icons/addphoto.png"),
+                                      onTap: () async {
+                                        FocusScope.of(context).unfocus();
+                                        _imgFromGallery();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                            isimgload
+                                ? SizedBox(
+                                    width: size.width * 0.6,
+                                    child: Image.file(File(_image!.path)),
+                                  )
+                                : Container(),
                             const SizedBox(
                               height: 10,
                             ),
@@ -172,15 +155,57 @@ class _SignUpState extends State<SignUp> {
                                             bottom: BorderSide(
                                                 color: Colors.grey.shade200))),
                                     child: TextFormField(
-                                      controller: _namecon,
+                                      controller: _titelcon,
                                       onChanged: (value) {
-                                        _name = value;
+                                        _titel = value;
                                       },
                                       validator: (value) {
                                         return Validater.genaralvalid(value!);
                                       },
                                       decoration: const InputDecoration(
-                                          hintText: "Name ",
+                                          hintText: "Title",
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade200))),
+                                    child: TextFormField(
+                                      controller: _pricecon,
+                                      onChanged: (value) {
+                                        _price = value;
+                                      },
+                                      validator: (value) {
+                                        return Validater.isNumeric(value!);
+                                      },
+                                      decoration: const InputDecoration(
+                                          hintText: "Price",
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade200))),
+                                    child: TextFormField(
+                                      controller: _mobilecon,
+                                      onChanged: (value) {
+                                        _mobile = value;
+                                      },
+                                      validator: (value) {
+                                        return Validater.vaildmobile(value!);
+                                      },
+                                      decoration: const InputDecoration(
+                                          hintText: "Mobile No",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           border: InputBorder.none),
@@ -254,64 +279,18 @@ class _SignUpState extends State<SignUp> {
                                             bottom: BorderSide(
                                                 color: Colors.grey.shade200))),
                                     child: TextFormField(
-                                      controller: _uncon,
+                                      maxLines: 12,
+                                      controller: _descriptioncon,
                                       onChanged: (value) {
-                                        _email = value;
+                                        _description = value;
                                       },
                                       validator: (value) {
-                                        return Validater.vaildemail(value!);
+                                        return Validater.genaralvalid(value!);
                                       },
                                       decoration: const InputDecoration(
-                                          hintText: "Email",
+                                          hintText: "Description",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      controller: _mobilecon,
-                                      onChanged: (value) {
-                                        _mobile = value;
-                                      },
-                                      validator: (value) {
-                                        return Validater.vaildmobile(value!);
-                                      },
-                                      decoration: const InputDecoration(
-                                          hintText: "Mobile No ",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      obscureText: isHidepassword,
-                                      controller: _pwcon,
-                                      onChanged: (value) {
-                                        _passWord = value;
-                                      },
-                                      validator: (value) {
-                                        return Validater.signupPassword(value!);
-                                      },
-                                      decoration: InputDecoration(
-                                          suffixIcon: InkWell(
-                                              onTap: _viewPassword,
-                                              child:
-                                                  const Icon(Icons.visibility)),
-                                          hintText: "Password ",
-                                          hintStyle: const TextStyle(
-                                              color: Colors.grey),
                                           border: InputBorder.none),
                                     ),
                                   ),
@@ -323,9 +302,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                if (_formKey.currentState!.validate() &&
-                                    (dropdowncity != selcity &&
-                                        dropdowndis != seldis)) {
+                                if (_formKey.currentState!.validate()) {
                                   print("press login");
                                   _scaffoldKey.currentState!
                                       // ignore: deprecated_member_use
@@ -335,62 +312,52 @@ class _SignUpState extends State<SignUp> {
                                     content: Row(
                                       children: const <Widget>[
                                         CircularProgressIndicator(),
-                                        Text("Registering...")
+                                        Text("Creating...")
                                       ],
                                     ),
                                   ));
-                                  print(_email.trim());
-                                  print(_passWord);
+                                  print(_titel.trim());
 
-                                  int r = await SigninManager()
-                                      .signUp(_email.trim(), _passWord);
+                                  String iurl = await _imageUpload();
+                                  final user =
+                                      FirebaseAuth.instance.currentUser;
+                                  // final pmodel = PostModel(
+                                  //     title: _titelcon.text,
+                                  //     context: _descriptioncon.text,
+                                  //     addeddate: Date.getStringdatetimenow(),
+                                  //     userid: user!.uid,
+                                  //     user: usermodel,
+                                  //     imageurl: iurl);
+                                  // int r = await FbHandeler.createDocAuto(
+                                  //   pmodel.toMap(),
+                                  //   CollectionPath.postpath,
+                                  // );
+                                  // ignore: use_build_context_synchronously
+                                  // Navigator.pushReplacement(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) {
+                                  //       return const HomeScreen(
+                                  //         index: 2,
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // );
 
-                                  if (r == resok) {
-                                    String iurl = await _imageUpload();
-                                    final user =
-                                        FirebaseAuth.instance.currentUser;
-                                    final umodel = UserModel(
-                                        uid: user!.uid,
-                                        name: _namecon.text,
-                                        email: _uncon.text,
-                                        phone: _mobilecon.text,
-                                        city: dropdowncity,
-                                        district: dropdowndis,
-                                        imageurl: iurl,
-                                        date: DateTime.now().toIso8601String());
-                                    await FbHandeler.createDocManual(
-                                        umodel.toMap(),
-                                        CollectionPath.userpath,
-                                        user.uid);
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return const CheckSignIn();
-                                        },
-                                      ),
-                                    );
-                                    print(r);
-                                  } else if (r == resfail) {
-                                    Get.snackbar(
-                                      "SignUp failed",
-                                      "Please enter the valid email or password",
-                                      icon: const Icon(Icons.error,
-                                          color: Colors.white),
-                                      snackPosition: SnackPosition.BOTTOM,
-                                    );
-                                  } else if (r == 2) {
-                                    Get.snackbar(
-                                      "SignUp failed",
-                                      "Please enter the valid email or password",
-                                      colorText: Colors.red,
-                                      backgroundColor: Colors.yellow,
-                                      icon: const Icon(Icons.error,
-                                          color: Colors.black),
-                                      snackPosition: SnackPosition.TOP,
-                                    );
-                                  }
+                                  // if (r == resok) {
+                                  //   // ignore: use_build_context_synchronously
+                                  //   Navigator.pop(context, true);
+                                  // } else if (r == resfail) {
+                                  //   Get.snackbar(
+                                  //     "Somthing went wromg",
+                                  //     "Please try again",
+                                  //     colorText: Colors.red,
+                                  //     backgroundColor: Colors.yellow,
+                                  //     icon: const Icon(Icons.error,
+                                  //         color: Colors.black),
+                                  //     snackPosition: SnackPosition.BOTTOM,
+                                  //   );
+                                  // }
                                 } else {
                                   print("Not Complete");
                                 }
@@ -404,27 +371,13 @@ class _SignUpState extends State<SignUp> {
                                     color: kPrimaryColordark),
                                 child: const Center(
                                   child: Text(
-                                    "Sign Up",
+                                    "Create",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
-                            ),
-                            OrDivider(),
-                            AlreadyHaveAnAccountCheck(
-                              login: false,
-                              press: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const SignIn();
-                                    },
-                                  ),
-                                );
-                              },
                             ),
                             const SizedBox(
                               height: 50,
@@ -441,16 +394,6 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
-  }
-
-  bool isHidepassword = true;
-  void _viewPassword() {
-    if (isHidepassword == true) {
-      isHidepassword = false;
-    } else {
-      isHidepassword = true;
-    }
-    setState(() {});
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -477,7 +420,7 @@ class _SignUpState extends State<SignUp> {
       String imgid = Date.getDateTimeId();
 
       imgurl =
-          await FileUploader.uploadImage(imgunitfile, userimagebucket, imgid);
+          await FileUploader.uploadImage(imgunitfile, postimagebucket, imgid);
     } else {
       imgurl = guserimg;
     }

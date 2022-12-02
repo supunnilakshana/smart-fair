@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nearvegi/constants/cities.dart';
+import 'package:nearvegi/screens/ads/create_post.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -79,8 +80,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final data = getcities(distric[0]);
-          print(data);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return CreatePostScreen();
+              },
+            ),
+          );
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
