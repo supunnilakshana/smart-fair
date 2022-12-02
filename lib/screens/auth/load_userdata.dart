@@ -4,6 +4,7 @@ import 'package:nearvegi/models/usermodel.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
+import 'package:nearvegi/screens/home/home_screen.dart';
 import 'package:nearvegi/test/test1.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,7 @@ class _LoadUserDataState extends State<LoadUserData> {
             context.read<UserModel>().updateData(data);
           });
 
-          return const MyHomePage(title: "title");
+          return const HomeScreen();
         } else if (snapshot.hasError) {
           return Errorpage(size: size.width * 0.7);
         }
