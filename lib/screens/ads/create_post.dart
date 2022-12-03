@@ -342,18 +342,17 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                     CollectionPath.postpath,
                                   );
                                   //ignore: use_build_context_synchronously
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return const HomeScreen();
-                                      },
-                                    ),
-                                  );
 
                                   if (r == resok) {
                                     // ignore: use_build_context_synchronously
-                                    Navigator.pop(context, true);
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return const HomeScreen();
+                                        },
+                                      ),
+                                    );
                                   } else if (r == resfail) {
                                     Get.snackbar(
                                       "Somthing went wromg",

@@ -79,7 +79,7 @@ class MenuDrawer extends StatelessWidget {
                   Icons.create,
                   color: kPrimaryColordark,
                 ),
-                title: const Text('Create a Add'),
+                title: const Text('Create a Ad'),
                 onTap: () async {
                   Navigator.push(
                       context,

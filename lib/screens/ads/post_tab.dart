@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nearvegi/models/postmodel.dart';
+import 'package:nearvegi/screens/ads/ad_view.dart';
 import 'package:nearvegi/screens/components/errorpage.dart';
 import 'package:nearvegi/services/firebase/fb_handeler.dart';
 
@@ -69,147 +70,148 @@ class _PostTabState extends State<PostTab> {
                 size: size.width * 0.1,
               ),
             )),
-        body: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  child: FutureBuilder(
-                    future: futureData,
-                    builder: (context, snapshot) {
-                      print(snapshot.hasData);
-                      if (snapshot.hasData) {
-                        List<PostModel> data = snapshot.data as List<PostModel>;
-                        print(data);
-                        if (data.isEmpty) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Lottie.asset("assets/animations/newsno.json",
-                                    width: size.width * 0.75),
-                                Text(
-                                  "No Ads just",
-                                  overflow: TextOverflow.fade,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: size.width * 0.045,
-                                      color: Colors.black54),
-                                ),
-                              ],
+        body: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: futureData,
+                builder: (context, snapshot) {
+                  print(snapshot.hasData);
+                  if (snapshot.hasData) {
+                    List<PostModel> data = snapshot.data as List<PostModel>;
+                    print(data);
+                    if (data.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset("assets/animations/newsno.json",
+                                width: size.width * 0.75),
+                            Text(
+                              "No Ads just",
+                              overflow: TextOverflow.fade,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: size.width * 0.045,
+                                  color: Colors.black54),
                             ),
-                          ); //nodatafound.json
-                        } else {
-                          return Container(
-                            child: ListView.builder(
-                                itemCount: data.length,
-                                itemBuilder: (context, indext) {
-                                  var pmodel = data[indext];
-                                  return Padding(
-                                      padding: EdgeInsets.only(
-                                          left: size.width * 0.01,
-                                          right: size.width * 0.01),
-                                      child: Card(
-                                        child: ListTile(
-                                          leading:
-                                              Image.network(pmodel.imageurl),
-                                          title: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              pmodel.title,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: kBasefontColor,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: size.width * 0.04),
-                                            ),
-                                          ),
-                                          subtitle: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 8, right: 8, bottom: 8),
-                                            child: Row(children: [
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(pmodel.city,
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        softWrap: false,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: kBasefontColor
-                                                                .withOpacity(
-                                                                    0.8))),
-                                                    SizedBox(
-                                                      height: 8,
-                                                    ),
-                                                    Text("Rs ${pmodel.price}",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        softWrap: false,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontSize:
-                                                                size.width *
-                                                                    0.038,
-                                                            color:
-                                                                kPrimaryColordark
-                                                                    .withOpacity(
-                                                                        0.8))),
-                                                    SizedBox(
-                                                      height: 3,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Expanded(
-                                                            child: Container()),
-                                                        Expanded(
-                                                          child: Text(
-                                                              pmodel.addeddate,
-                                                              maxLines: 2,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              softWrap: false,
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: kBasefontColor
-                                                                      .withOpacity(
-                                                                          0.8))),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ]),
+                          ],
+                        ),
+                      ); //nodatafound.json
+                    } else {
+                      return Container(
+                        child: ListView.builder(
+                            itemCount: data.length,
+                            itemBuilder: (context, indext) {
+                              var pmodel = data[indext];
+                              return Padding(
+                                  padding: EdgeInsets.only(
+                                      left: size.width * 0.01,
+                                      right: size.width * 0.01),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return AdView(pmodel: pmodel);
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: Card(
+                                      child: ListTile(
+                                        leading: Image.network(pmodel.imageurl),
+                                        title: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            pmodel.title,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: kBasefontColor,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: size.width * 0.04),
                                           ),
                                         ),
-                                      ));
-                                }),
-                          );
-                        }
-                      } else if (snapshot.hasError) {
-                        return Errorpage(size: size.width * 0.7);
-                      }
-                      // By default show a loading spinner.
-                      return Center(
-                          child: Lottie.asset(
-                              "assets/animations/loadinganimi.json",
-                              width: size.width * 0.6));
-                    },
-                  ),
-                ),
+                                        subtitle: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8, right: 8, bottom: 8),
+                                          child: Row(children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(pmodel.city,
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: kBasefontColor
+                                                              .withOpacity(
+                                                                  0.8))),
+                                                  const SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  Text("Rs ${pmodel.price}",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: size.width *
+                                                              0.038,
+                                                          color:
+                                                              kPrimaryColordark
+                                                                  .withOpacity(
+                                                                      0.8))),
+                                                  const SizedBox(
+                                                    height: 3,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Text(pmodel.addeddate,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          softWrap: false,
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: kBasefontColor
+                                                                  .withOpacity(
+                                                                      0.8))),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ]),
+                                        ),
+                                      ),
+                                    ),
+                                  ));
+                            }),
+                      );
+                    }
+                  } else if (snapshot.hasError) {
+                    return Errorpage(size: size.width * 0.7);
+                  }
+                  // By default show a loading spinner.
+                  return Center(
+                      child: Lottie.asset("assets/animations/loadinganimi.json",
+                          width: size.width * 0.6));
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ));
   }
 
