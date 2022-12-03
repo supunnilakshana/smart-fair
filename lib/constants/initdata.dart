@@ -4,6 +4,9 @@ const testbunimg =
 const guserimg =
     "https://www.clipartmax.com/png/middle/319-3191274_male-avatar-admin-profile.png";
 
+const addtumb =
+    "https://firebasestorage.googleapis.com/v0/b/smartfair-fe0af.appspot.com/o/init%2Fadvertisement.png?alt=media&token=a16dcc2a-3813-40ee-96af-71e63ef21990";
+
 const userimagebucket = "images/users";
 const postimagebucket = "images/posts/";
 

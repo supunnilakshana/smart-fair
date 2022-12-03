@@ -8,7 +8,9 @@ import 'package:nearvegi/screens/auth/sign_in.dart';
 import 'package:nearvegi/screens/components/popup_dilog.dart';
 import 'package:nearvegi/screens/drawer_items/aboutus_screen.dart';
 import 'package:nearvegi/screens/drawer_items/contact_us.dart';
+import 'package:nearvegi/screens/drawer_items/my_ads.dart';
 import 'package:nearvegi/screens/drawer_items/privacy_screen.dart';
+import 'package:nearvegi/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/auth/signin_mannager.dart';
@@ -38,7 +40,22 @@ class MenuDrawer extends StatelessWidget {
                   backgroundImage: NetworkImage(
                       userModel.imageurl != "" ? userModel.imageurl : guserimg),
                 )),
-
+            Card(
+              elevation: 0,
+              child: ListTile(
+                leading: const Icon(
+                  Icons.home,
+                  color: kPrimaryColordark,
+                ),
+                title: const Text('Home'),
+                onTap: () async {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                },
+              ),
+            ),
             Card(
               elevation: 0,
               child: ListTile(
@@ -84,7 +101,7 @@ class MenuDrawer extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const AboutUsScreen()));
+                          builder: (context) => const MyAdsScreen()));
                 },
               ),
             ),

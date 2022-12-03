@@ -15,6 +15,9 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../services/firebase/fb_handeler.dart';
+import '../home/home_screen.dart';
+
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({Key? key}) : super(key: key);
 
@@ -302,7 +305,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                if (_formKey.currentState!.validate()) {
+                                if (_formKey.currentState!.validate() &&
+                                    (dropdowncity != selcity &&
+                                        dropdowndis != seldis)) {
                                   print("press login");
                                   _scaffoldKey.currentState!
                                       // ignore: deprecated_member_use
@@ -321,43 +326,45 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                   String iurl = await _imageUpload();
                                   final user =
                                       FirebaseAuth.instance.currentUser;
-                                  // final pmodel = PostModel(
-                                  //     title: _titelcon.text,
-                                  //     context: _descriptioncon.text,
-                                  //     addeddate: Date.getStringdatetimenow(),
-                                  //     userid: user!.uid,
-                                  //     user: usermodel,
-                                  //     imageurl: iurl);
-                                  // int r = await FbHandeler.createDocAuto(
-                                  //   pmodel.toMap(),
-                                  //   CollectionPath.postpath,
-                                  // );
-                                  // ignore: use_build_context_synchronously
-                                  // Navigator.pushReplacement(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) {
-                                  //       return const HomeScreen(
-                                  //         index: 2,
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // );
+                                  final pmodel = PostModel(
+                                      title: _titelcon.text,
+                                      context: _descriptioncon.text,
+                                      addeddate: Date.getStringdatetimenow(),
+                                      userid: user!.uid,
+                                      user: usermodel,
+                                      imageurl: iurl,
+                                      city: dropdowncity,
+                                      dis: dropdowndis,
+                                      price:
+                                          double.parse(_pricecon.text.trim()));
+                                  int r = await FbHandeler.createDocAuto(
+                                    pmodel.toMap(),
+                                    CollectionPath.postpath,
+                                  );
+                                  //ignore: use_build_context_synchronously
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const HomeScreen();
+                                      },
+                                    ),
+                                  );
 
-                                  // if (r == resok) {
-                                  //   // ignore: use_build_context_synchronously
-                                  //   Navigator.pop(context, true);
-                                  // } else if (r == resfail) {
-                                  //   Get.snackbar(
-                                  //     "Somthing went wromg",
-                                  //     "Please try again",
-                                  //     colorText: Colors.red,
-                                  //     backgroundColor: Colors.yellow,
-                                  //     icon: const Icon(Icons.error,
-                                  //         color: Colors.black),
-                                  //     snackPosition: SnackPosition.BOTTOM,
-                                  //   );
-                                  // }
+                                  if (r == resok) {
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.pop(context, true);
+                                  } else if (r == resfail) {
+                                    Get.snackbar(
+                                      "Somthing went wromg",
+                                      "Please try again",
+                                      colorText: Colors.red,
+                                      backgroundColor: Colors.yellow,
+                                      icon: const Icon(Icons.error,
+                                          color: Colors.black),
+                                      snackPosition: SnackPosition.BOTTOM,
+                                    );
+                                  }
                                 } else {
                                   print("Not Complete");
                                 }
@@ -422,7 +429,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       imgurl =
           await FileUploader.uploadImage(imgunitfile, postimagebucket, imgid);
     } else {
-      imgurl = guserimg;
+      imgurl = addtumb;
     }
     print(imgurl);
     return imgurl;

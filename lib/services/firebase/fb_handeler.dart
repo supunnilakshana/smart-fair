@@ -146,6 +146,25 @@ class FbHandeler {
     return enlist;
   }
 
+  static Future<List<PostModel>> getmyPost() async {
+    List<PostModel> enlist = [];
+    PostModel enmodel;
+    QuerySnapshot querySnapshot =
+        await firestoreInstance.collection(CollectionPath.postpath).get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+      print(a.data());
+      enmodel = PostModel.fromMap(a.data() as Map<String, dynamic>, a.id);
+      if (enmodel.user.uid == user!.uid) {
+        enlist.add(enmodel);
+      }
+      print("passed");
+    }
+    print(enlist);
+    enlist.sort((a, b) => b.addeddate.compareTo(a.addeddate));
+    return enlist;
+  }
+
   static Future<List<UserModel>> getalluserspec(String r) async {
     List<UserModel> enlist = [];
     UserModel enmodel;

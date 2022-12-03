@@ -6,26 +6,29 @@ import 'package:line_icons/line_icon.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nearvegi/models/postmodel.dart';
 import 'package:nearvegi/screens/components/errorpage.dart';
+import 'package:nearvegi/screens/components/popup_dilog.dart';
+import 'package:nearvegi/screens/components/tots.dart';
 import 'package:nearvegi/services/firebase/fb_handeler.dart';
 
 import '../../constants/constraints.dart';
+import '../../constants/initdata.dart';
 import '../home/drawer.dart';
 
-class PostTab extends StatefulWidget {
-  const PostTab({
+class MyAdsScreen extends StatefulWidget {
+  const MyAdsScreen({
     Key? key,
   }) : super(key: key);
   @override
-  _PostTabState createState() => _PostTabState();
+  _MyAdsScreenState createState() => _MyAdsScreenState();
 }
 
-class _PostTabState extends State<PostTab> {
+class _MyAdsScreenState extends State<MyAdsScreen> {
   late Future<List<PostModel>> futureData;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-    futureData = FbHandeler.getallPost();
+    futureData = FbHandeler.getmyPost();
   }
 
   @override
@@ -42,15 +45,8 @@ class _PostTabState extends State<PostTab> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                LineIcon.globe(
-                  size: size.width * 0.073,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: size.width * 0.01,
-                ),
                 Text(
-                  "Smart Fair",
+                  "My advertisements",
                   style: TextStyle(
                       fontSize: size.width * 0.063, color: Colors.white),
                 ),
@@ -191,6 +187,38 @@ class _PostTabState extends State<PostTab> {
                                               ),
                                             ]),
                                           ),
+                                          trailing: IconButton(
+                                            onPressed: () async {
+                                              PopupDialog.showPopupWarning(
+                                                  context,
+                                                  "Remove",
+                                                  "Are you sure to delete this ad? ",
+                                                  () async {
+                                                int res =
+                                                    await FbHandeler.deletedoc(
+                                                        CollectionPath.postpath,
+                                                        pmodel.id!);
+                                                if (res == resok) {
+                                                  Customtost.commontost(
+                                                      "Sucessfully removed",
+                                                      Colors.green);
+                                                  loaddata();
+                                                } else {
+                                                  Customtost.commontost(
+                                                      " Removing failed",
+                                                      Colors.red);
+                                                }
+                                              });
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: kBasefontColor
+                                                  .withOpacity(0.6),
+                                            ),
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            iconSize: size.width * 0.07,
+                                          ),
                                         ),
                                       ));
                                 }),
@@ -214,7 +242,7 @@ class _PostTabState extends State<PostTab> {
   }
 
   loaddata() async {
-    futureData = FbHandeler.getallPost();
+    futureData = FbHandeler.getmyPost();
     setState(() {});
   }
 }
