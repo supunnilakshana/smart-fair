@@ -18,7 +18,7 @@ class Textfiledcontainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.03, vertical: size.height * 0.003),
       decoration: BoxDecoration(
-          color: kPrimaryColorlight, borderRadius: BorderRadius.circular(29)),
+          color: kPrimaryColorlight, borderRadius: BorderRadius.circular(12)),
       child: child,
     );
   }

@@ -5,6 +5,7 @@ import 'package:nearvegi/constants/constraints.dart';
 import 'package:nearvegi/constants/initdata.dart';
 import 'package:nearvegi/models/postmodel.dart';
 import 'package:nearvegi/models/usermodel.dart';
+import 'package:nearvegi/screens/components/popup_dilog.dart';
 import 'package:nearvegi/services/date_time/date.dart';
 import 'package:nearvegi/services/upload/file_upload.dart';
 import 'package:nearvegi/services/validator/validate_handeler.dart';
@@ -46,7 +47,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   @override
   void initState() {
     discts = distric;
-    cities = getcities(discts[1]);
+    cities = getcities(discts[2]);
     super.initState();
   }
 
@@ -308,61 +309,141 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                 if (_formKey.currentState!.validate() &&
                                     (dropdowncity != selcity &&
                                         dropdowndis != seldis)) {
-                                  print("press login");
-                                  _scaffoldKey.currentState!
-                                      // ignore: deprecated_member_use
-                                      .showSnackBar(SnackBar(
-                                    duration: const Duration(seconds: 4),
-                                    backgroundColor: kPrimaryColordark,
-                                    content: Row(
-                                      children: const <Widget>[
-                                        CircularProgressIndicator(),
-                                        Text("Creating...")
-                                      ],
-                                    ),
-                                  ));
-                                  print(_titel.trim());
+                                  int rd = 0;
+                                  if (usermodel.adno >= 0) {
+                                    PopupDialog.showPopupDilog(
+                                        context,
+                                        "Free Ads",
+                                        "Only ${usermodel.adno} ads are free!!.When End of free ads , you must pay Rs 5.00 per ad.",
+                                        () async {
+                                      print("press login");
+                                      _scaffoldKey.currentState!
+                                          // ignore: deprecated_member_use
+                                          .showSnackBar(SnackBar(
+                                        duration: const Duration(seconds: 4),
+                                        backgroundColor: kPrimaryColordark,
+                                        content: Row(
+                                          children: const <Widget>[
+                                            CircularProgressIndicator(),
+                                            Text("Creating...")
+                                          ],
+                                        ),
+                                      ));
+                                      print(_titel.trim());
 
-                                  String iurl = await _imageUpload();
-                                  final user =
-                                      FirebaseAuth.instance.currentUser;
-                                  final pmodel = PostModel(
-                                      title: _titelcon.text,
-                                      context: _descriptioncon.text,
-                                      addeddate: Date.getStringdatetimenow(),
-                                      userid: user!.uid,
-                                      user: usermodel,
-                                      imageurl: iurl,
-                                      city: dropdowncity,
-                                      dis: dropdowndis,
-                                      price:
-                                          double.parse(_pricecon.text.trim()));
-                                  int r = await FbHandeler.createDocAuto(
-                                    pmodel.toMap(),
-                                    CollectionPath.postpath,
-                                  );
-                                  //ignore: use_build_context_synchronously
+                                      String iurl = await _imageUpload();
+                                      final user =
+                                          FirebaseAuth.instance.currentUser;
+                                      var tum = usermodel;
+                                      tum.phone = _mobilecon.text.trim();
+                                      tum.adno -= 1;
+                                      final pmodel = PostModel(
+                                          title: _titelcon.text,
+                                          context: _descriptioncon.text,
+                                          addeddate:
+                                              Date.getStringdatetimenow(),
+                                          userid: user!.uid,
+                                          user: tum,
+                                          imageurl: iurl,
+                                          city: dropdowncity,
+                                          dis: dropdowndis,
+                                          price: double.parse(
+                                              _pricecon.text.trim()));
+                                      int r = await FbHandeler.createDocAuto(
+                                        pmodel.toMap(),
+                                        CollectionPath.postpath,
+                                      );
+                                      //ignore: use_build_context_synchronously
 
-                                  if (r == resok) {
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return const HomeScreen();
-                                        },
-                                      ),
-                                    );
-                                  } else if (r == resfail) {
-                                    Get.snackbar(
-                                      "Somthing went wromg",
-                                      "Please try again",
-                                      colorText: Colors.red,
-                                      backgroundColor: Colors.yellow,
-                                      icon: const Icon(Icons.error,
-                                          color: Colors.black),
-                                      snackPosition: SnackPosition.BOTTOM,
-                                    );
+                                      if (r == resok) {
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return const HomeScreen();
+                                            },
+                                          ),
+                                        );
+                                      } else if (r == resfail) {
+                                        Get.snackbar(
+                                          "Somthing went wromg",
+                                          "Please try again",
+                                          colorText: Colors.red,
+                                          backgroundColor: Colors.yellow,
+                                          icon: const Icon(Icons.error,
+                                              color: Colors.black),
+                                          snackPosition: SnackPosition.BOTTOM,
+                                        );
+                                      }
+                                    });
+                                  } else {
+                                    PopupDialog.showPopupDilog(
+                                        context,
+                                        "Ads Fee",
+                                        " You must pay Rs 5.00 this  ad.",
+                                        () async {
+                                      print("press login");
+                                      _scaffoldKey.currentState!
+                                          // ignore: deprecated_member_use
+                                          .showSnackBar(SnackBar(
+                                        duration: const Duration(seconds: 4),
+                                        backgroundColor: kPrimaryColordark,
+                                        content: Row(
+                                          children: const <Widget>[
+                                            CircularProgressIndicator(),
+                                            Text("Creating...")
+                                          ],
+                                        ),
+                                      ));
+                                      print(_titel.trim());
+
+                                      String iurl = await _imageUpload();
+                                      final user =
+                                          FirebaseAuth.instance.currentUser;
+                                      var tum = usermodel;
+                                      tum.phone = _mobilecon.text.trim();
+                                      tum.adno -= 1;
+                                      final pmodel = PostModel(
+                                          title: _titelcon.text,
+                                          context: _descriptioncon.text,
+                                          addeddate:
+                                              Date.getStringdatetimenow(),
+                                          userid: user!.uid,
+                                          user: tum,
+                                          imageurl: iurl,
+                                          city: dropdowncity,
+                                          dis: dropdowndis,
+                                          price: double.parse(
+                                              _pricecon.text.trim()));
+                                      int r = await FbHandeler.createDocAuto(
+                                        pmodel.toMap(),
+                                        CollectionPath.postpath,
+                                      );
+                                      //ignore: use_build_context_synchronously
+
+                                      if (r == resok) {
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return const HomeScreen();
+                                            },
+                                          ),
+                                        );
+                                      } else if (r == resfail) {
+                                        Get.snackbar(
+                                          "Somthing went wromg",
+                                          "Please try again",
+                                          colorText: Colors.red,
+                                          backgroundColor: Colors.yellow,
+                                          icon: const Icon(Icons.error,
+                                              color: Colors.black),
+                                          snackPosition: SnackPosition.BOTTOM,
+                                        );
+                                      }
+                                    });
                                   }
                                 } else {
                                   print("Not Complete");

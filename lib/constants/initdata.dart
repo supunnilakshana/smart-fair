@@ -24,6 +24,8 @@ class ItemType {
   static const coffe = "c";
 }
 
+const int maxad = 10;
+
 enum UserRole { farmer, fofficer, expert }
 
 String getpossition(String role) {

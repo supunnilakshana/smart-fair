@@ -128,7 +128,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               width: size.width * 0.03,
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                _makefb();
+                              },
                               child: Image.asset(
                                 "assets/icons/facebook.png",
                                 width: size.width * 0.08,
@@ -316,10 +318,21 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     );
   }
 
+  Future<void> _makefb() async {
+    final url = Uri.parse(
+        "https://www.facebook.com/people/SMART-FAIR/100087985707390/?mibextid=ZbWKwL");
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
   Future<void> _makePhoneCall() async {
     final Uri launchUri = Uri(
       scheme: 'tel',
-      path: "0114536972",
+      path: "0704484990",
     );
     await launchUrl(launchUri);
   }
@@ -327,7 +340,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   Future<void> _makeemail() async {
     final Uri launchUri = Uri(
       scheme: 'mailto',
-      path: "smartagri@abcmail.com",
+      path: "smartfair.madhu@gmail.com",
     );
     await launchUrl(launchUri);
   }
@@ -335,10 +348,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   String _makewhatappl() {
     if (Platform.isAndroid) {
       // add the [https]
-      return "https://wa.me/${"+94783611340"}/?text=${Uri.parse("")}"; // new line
+      return "https://wa.me/${"+94704484990"}/?text=${Uri.parse("")}"; // new line
     } else {
       // add the [https]
-      return "https://api.whatsapp.com/send?phone=${"+94783611340"}=${Uri.parse("")}"; // new line
+      return "https://api.whatsapp.com/send?phone=${"+94704484990"}=${Uri.parse("")}"; // new line
     }
   }
 }

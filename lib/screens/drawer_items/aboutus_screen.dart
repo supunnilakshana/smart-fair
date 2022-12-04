@@ -45,7 +45,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       left: size.width * 0.05,
                       right: size.width * 0.05),
                   child: Text(
-                    "Smart Agri provide facilities to build better connection with paddy farmers ,Agri experts and Field officers.This mobile app provide facilities to farmers to contact with  Agei experts and field officers easily. Also Agri experts can contact with paddy farmers and Field officers via online. Agri field officers can contact with paddy farmers and Agri experts easily.\n\nSmart Agri currently offers a range of Agri services including experts connection sessions at Agriculture department , E-Community , News and videos.",
+                    "Smart Fair  offer tools for fostering stronger relationships between buyers and sellers of fresh vegetables and fruits. Customers of veggies and fruits can use this smart Fair app to connect with nearby sellers quickly. Using the mobile phone option and messaging provided by Smart Fair, customers may communicate with nearby sellers.",
                     style: TextStyle(
                       fontSize: size.width * 0.039,
                       fontWeight: FontWeight.w400,

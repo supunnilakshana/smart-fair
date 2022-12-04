@@ -146,6 +146,58 @@ class FbHandeler {
     return enlist;
   }
 
+  static Future<List<PostModel>> getnearPost() async {
+    final usr = await getUser();
+    List<PostModel> enlist = [];
+    enlist = await getfilterPost(city: usr.city, distric: usr.district);
+    return enlist;
+  }
+
+  static Future<List<PostModel>> getfilterPost(
+      {required String city, required String distric}) async {
+    List<PostModel> enlist = [];
+    List<PostModel> clist = [];
+    List<PostModel> dlist = [];
+    PostModel enmodel;
+    if (distric == "All") {
+      enlist = await getallPost();
+    } else if (city == "All") {
+      QuerySnapshot querySnapshot = await firestoreInstance
+          .collection(CollectionPath.postpath)
+          .where("dis", isEqualTo: distric)
+          .get();
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        var a = querySnapshot.docs[i];
+        print(a.data());
+        enmodel = PostModel.fromMap(a.data() as Map<String, dynamic>, a.id);
+        enlist.add(enmodel);
+      }
+      enlist.sort((a, b) => b.addeddate.compareTo(a.addeddate));
+      print("passed");
+    } else {
+      QuerySnapshot querySnapshot = await firestoreInstance
+          .collection(CollectionPath.postpath)
+          .where("dis", isEqualTo: distric)
+          .get();
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        var a = querySnapshot.docs[i];
+        print(a.data());
+        enmodel = PostModel.fromMap(a.data() as Map<String, dynamic>, a.id);
+        if (enmodel.city == city) {
+          clist.add(enmodel);
+        } else {
+          dlist.add(enmodel);
+        }
+        print("passed");
+      }
+      print(enlist);
+      clist.sort((a, b) => b.addeddate.compareTo(a.addeddate));
+      dlist.sort((a, b) => b.addeddate.compareTo(a.addeddate));
+      enlist = clist + dlist;
+    }
+    return enlist;
+  }
+
   static Future<List<PostModel>> getmyPost() async {
     List<PostModel> enlist = [];
     PostModel enmodel;
