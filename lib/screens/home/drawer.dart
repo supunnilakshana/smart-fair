@@ -10,6 +10,7 @@ import 'package:nearvegi/screens/drawer_items/aboutus_screen.dart';
 import 'package:nearvegi/screens/drawer_items/contact_us.dart';
 import 'package:nearvegi/screens/drawer_items/my_ads.dart';
 import 'package:nearvegi/screens/drawer_items/privacy_screen.dart';
+import 'package:nearvegi/screens/drawer_items/profile_page.dart';
 import 'package:nearvegi/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -68,7 +69,8 @@ class MenuDrawer extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PrivacyScreen()));
+                          builder: (context) =>
+                              UserProfileScreen(umodel: userModel)));
                 },
               ),
             ),
@@ -79,7 +81,7 @@ class MenuDrawer extends StatelessWidget {
                   Icons.create,
                   color: kPrimaryColordark,
                 ),
-                title: const Text('Create a Ad'),
+                title: const Text('Create an Ad'),
                 onTap: () async {
                   Navigator.push(
                       context,

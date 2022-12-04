@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nearvegi/screens/components/tots.dart';
 import 'package:nearvegi/services/validator/validate_handeler.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -282,7 +283,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                if (_formKey.currentState!.validate()) {}
+                                if (_formKey.currentState!.validate()) {
+                                  Customtost.commontost(
+                                      "Submitted", kPrimaryColordark);
+                                  _addrcon.clear();
+                                }
                               },
                               child: Container(
                                 height: 50,

@@ -80,7 +80,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Create a  advertisment",
+                        "Create an  advertisment",
                         style: TextStyle(color: Colors.white, fontSize: 32),
                       ),
                       const SizedBox(
