@@ -310,11 +310,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                     (dropdowncity != selcity &&
                                         dropdowndis != seldis)) {
                                   int rd = 0;
-                                  if (usermodel.adno >= 0) {
+                                  if (usermodel.adno <= maxad) {
                                     PopupDialog.showPopupDilog(
                                         context,
                                         "Free Ads",
-                                        "Only ${usermodel.adno} ads are free!!.When End of free ads , you must pay Rs 5.00 per ad.",
+                                        "Only ${maxad - usermodel.adno} ads are free!!.When End of free ads , you must pay Rs 5.00 per ad.",
                                         () async {
                                       print("press login");
                                       _scaffoldKey.currentState!
@@ -336,7 +336,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                           FirebaseAuth.instance.currentUser;
                                       var tum = usermodel;
                                       tum.phone = _mobilecon.text.trim();
-                                      tum.adno -= 1;
+                                      tum.adno += 1;
                                       final pmodel = PostModel(
                                           title: _titelcon.text,
                                           context: _descriptioncon.text,

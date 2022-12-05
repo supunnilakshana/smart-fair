@@ -24,7 +24,7 @@ class ItemType {
   static const coffe = "c";
 }
 
-const int maxad = 10;
+const int maxad = 15;
 
 enum UserRole { farmer, fofficer, expert }
 
